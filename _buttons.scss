@@ -1,0 +1,46 @@
+$sizes: (
+  extra-large: 1.5rem,
+  huge: 1.75rem,
+  giant: 2rem
+);
+
+$btn-colors: (
+  primary: $primary,
+  secondary: $secondary,
+  tertiary: $tertiary
+);
+
+@mixin buttonHover($color){
+  background:darken($color, $color-change);
+  border-color:darken($color, $color-change);
+}
+
+@mixin buttonStates($color, $text){
+  background-color: $color;
+  color: black;
+  font-weight:600;
+  border-color: $color;
+  &:hover{
+    @include buttonHover($color);
+  }
+}
+
+@mixin buttonSizes(){
+  @each $class, $size in $sizes {
+    &.#{$class} {
+      font-size: $size;
+    }
+  }
+}
+
+button, .button{
+  @include buttonSizes();
+  @each $color, $value in $btn-colors{
+    &.btn_#{$color}{
+      @include buttonStates($value, $value);
+    }
+    &.btn_#{$color}--invert{
+      @include buttonStates(invert($value), $value);
+    }
+  }
+}
